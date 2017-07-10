@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>game experimental-desktop</name>
+	<name>goo-desktop</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -19,7 +19,13 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/android/assets</locationURI>
+			<locationURI>copy_PARENT/android/assets</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-1-ECLIPSE_HOME%7D/GitHub/goo</value>
+		</variable>
+	</variableList>
 </projectDescription>
