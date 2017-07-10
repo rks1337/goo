@@ -1,7 +1,7 @@
 # goo
 liquid goo simulation libgdx
 
-![Alt text](https://github.com/rks1337/goo/blob/master/goo_screen_1.png "goo out!")
+![Alt text](https://github.com/rks1337/goo/blob/master/goo_screen_1.png "ლ(◕ω◕ლ)")
 
 This project uses this awesome post-processing library: https://github.com/manuelbua/libgdx-contribs
 
