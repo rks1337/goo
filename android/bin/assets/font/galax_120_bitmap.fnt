@@ -1,0 +1,15 @@
+info face="Galaxy Monkey" size=-120 bold=0 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=1,1 outline=0
+common lineHeight=144 base=126 scaleW=256 scaleH=256 pages=2 packed=0 alphaChnl=0 redChnl=4 greenChnl=4 blueChnl=4
+page id=0 file="galax_120_bitmap_0.png"
+page id=1 file="galax_120_bitmap_1.png"
+chars count=10
+char id=48   x=77    y=87    width=75    height=86    xoffset=7     yoffset=40    xadvance=88    page=0  chnl=15
+char id=49   x=0     y=0     width=76    height=86    xoffset=6     yoffset=40    xadvance=86    page=0  chnl=15
+char id=50   x=153   y=87    width=75    height=86    xoffset=5     yoffset=40    xadvance=85    page=0  chnl=15
+char id=51   x=0     y=87    width=75    height=86    xoffset=6     yoffset=40    xadvance=88    page=1  chnl=15
+char id=52   x=77    y=0     width=76    height=86    xoffset=8     yoffset=40    xadvance=90    page=0  chnl=15
+char id=53   x=152   y=0     width=75    height=86    xoffset=5     yoffset=40    xadvance=85    page=1  chnl=15
+char id=54   x=154   y=0     width=76    height=86    xoffset=6     yoffset=40    xadvance=87    page=0  chnl=15
+char id=55   x=0     y=87    width=76    height=86    xoffset=5     yoffset=40    xadvance=87    page=0  chnl=15
+char id=56   x=76    y=0     width=75    height=86    xoffset=7     yoffset=40    xadvance=89    page=1  chnl=15
+char id=57   x=0     y=0     width=75    height=86    xoffset=6     yoffset=40    xadvance=88    page=1  chnl=15
