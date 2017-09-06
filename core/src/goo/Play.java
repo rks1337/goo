@@ -1,5 +1,9 @@
 package goo;
 
+import bitfire.postprocessing.PostProcessor;
+import bitfire.postprocessing.effects.Bloom;
+import bitfire.utils.ShaderLoader;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,14 +27,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;	
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import bitfire.postprocessing.PostProcessor;
-import bitfire.postprocessing.effects.Bloom;
-import bitfire.utils.ShaderLoader;
 
 public class Play implements Screen {
 	private static final float TIMESTEP = 1 / 30f;
@@ -178,7 +179,7 @@ public class Play implements Screen {
 		bloom.setBaseIntesity(0);
 		bloom.setBaseSaturation(0);
 		bloom.setBloomSaturation(1);
-		bloom.setBloomIntesity(5);
+		bloom.setBloomIntesity(10);
 		bloom.setBlurAmount(0);
 		bloom.setThreshold(.97f);
 

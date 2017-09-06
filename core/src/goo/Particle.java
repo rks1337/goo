@@ -33,7 +33,7 @@ public class Particle {
 		fixtureDef.friction = 0f;
 		fixtureDef.restitution = 0f;
 		fixtureDef.density = 0f;
-		sprite = new Sprite(new Sprite(assets.manager.get(Assets.c_green)));
+		sprite = new Sprite(assets.manager.get(Assets.c_green));
 
 		sprite.setAlpha(1f);
 		sprite.setSize(10, 10);
