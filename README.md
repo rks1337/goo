@@ -5,6 +5,6 @@ liquid goo simulation libgdx - download and run the jar: https://github.com/rks1
 
 This project uses this awesome post-processing library: https://github.com/manuelbua/libgdx-contribs
 
-andriod dl: https://play.google.com/store/apps/details?id=com.exp
+andriod dl: 
 
-runnable jar: https://github.com/rks1337/goo/blob/master/goo.jar
+[older versions:](https://github.com/rks1337/goo/tree/master/old%20versions)
