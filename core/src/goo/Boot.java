@@ -16,8 +16,8 @@ public class Boot extends Game {
 			public void run() {
 				assets = new Assets();
 				assets.load();
-				assets.manager.finishLoading();
-
+				Assets.manager.finishLoading();
+				Audio.create();
 				setScreen(new Play());
 			}
 		}, 2f);

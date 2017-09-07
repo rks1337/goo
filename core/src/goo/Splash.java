@@ -5,17 +5,24 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -24,15 +31,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
+import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Splash implements Screen {
 	private static final float TIMESTEP = 1 / 60f;
-	private static final int VELOCITYITERATIONS = 1, POSITIONITERATIONS = 6;
+	private static final int VELOCITYITERATIONS = 8, POSITIONITERATIONS = 3;
 
 	private World world;
 	private Box2DDebugRenderer debugRenderer;
-	private SpriteBatch batch;
+	private PolygonSpriteBatch batch;
 	private OrthographicCamera camera;
 
 	private Stage hud;
@@ -54,7 +63,7 @@ public class Splash implements Screen {
 
 		world = new World(new Vector2(0f, -25.81f), true);
 		debugRenderer = new Box2DDebugRenderer();
-		batch  = new SpriteBatch();
+		batch  = new PolygonSpriteBatch();
 		camera = new OrthographicCamera();
 
 		hud = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()), batch);
@@ -62,7 +71,6 @@ public class Splash implements Screen {
 		hud.addActor(table0);
 		hud.addActor(table1);
 
-		// free type font
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/galax___.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 
@@ -70,7 +78,6 @@ public class Splash implements Screen {
 		parameter.color = Color.WHITE;
 		font = generator.generateFont(parameter);
 
-		// hud buttons
 		TextButtonStyle style = new TextButtonStyle();
 		style.font = font;
 
@@ -89,39 +96,67 @@ public class Splash implements Screen {
 		parameter.size = 40;
 		font = generator.generateFont(parameter);
 		style.font = font;
-
 		generator.dispose();
 
-		// table
 		table0.add(title);
-
 		table1.center();
 
-		// DEBUG
-		//table0.debug();
-		//table1.debug();
+		PolygonSprite polygon_sprite;
+		PolygonShape polygon_shape = new PolygonShape();
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.StaticBody;
+		FixtureDef fixtureDef = new FixtureDef();
 
-		final Square i = new Square(0f, -50f, 10, 1, -1);
-		i.bodyDef.type = BodyType.StaticBody;
-		i.fixtureDef.restitution = 0f;
-		ground = world.createBody(i.bodyDef);
-		ground.createFixture(i.fixtureDef);
-		ground.setUserData(i.sprite);
-		i.shape.dispose();
+		//plat
+		polygon_shape.setAsBox(10, 1);
+		bodyDef.position.set(0, -50);
+		fixtureDef.restitution = 0f;
+		fixtureDef.shape = polygon_shape;
+		ground = world.createBody(bodyDef);
+		ground.createFixture(fixtureDef);
 
-		final Square drop = new Square(5f, -4, 5, 5, -1);
-		drop.bodyDef.angularVelocity = 2;
-		drop.bodyDef.gravityScale = 10;
-		drop.fixtureDef.restitution = 1;
-		ground = world.createBody(drop.bodyDef);
-		ground.createFixture(drop.fixtureDef);
-		ground.setUserData(drop.sprite);
-		Sprite sprite0 = new Sprite(new Texture(Gdx.files.internal("colors/green.png")));
-		sprite0.setSize(5f * 2.02f, 5f * 2.02f);
-		sprite0.setOrigin(sprite0.getWidth() / 2, sprite0.getHeight() / 2);
-		ground.setUserData(sprite0);
-		drop.shape.dispose();
+		//drop
+		polygon_shape.setAsBox(5, 5);
+		bodyDef.position.set(5, -4);
+		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.angularVelocity = 2f;
+		bodyDef.gravityScale = 10f;
 
+		fixtureDef.friction = 2f;
+		fixtureDef.restitution = 1f;
+		fixtureDef.density = .01f;
+		fixtureDef.shape = polygon_shape;
+
+		FloatArray f = new FloatArray();
+		Vector2 tmp = new Vector2();
+		for (int i = 0; i < polygon_shape.getVertexCount(); i++) {
+			polygon_shape.getVertex(i, tmp);
+			f.add(tmp.x);
+			f.add(tmp.y);
+		}
+
+		Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+		pixmap.setColor(new Color(0/255f, 255/255f, 85/255f, 1f));
+		pixmap.fill();
+		Texture texture = new Texture(pixmap);
+
+		TextureRegion texture_region = new TextureRegion(texture);
+		EarClippingTriangulator ear = new EarClippingTriangulator();
+		ShortArray triangles = ear.computeTriangles(f);
+
+		PolygonRegion poly_region = new PolygonRegion(texture_region, f.toArray(), triangles.toArray());
+		polygon_sprite = new PolygonSprite(poly_region);
+		polygon_sprite.setOrigin(
+				polygon_sprite.getWidth() / 30, 
+				polygon_sprite.getHeight() / 30);
+
+		pixmap.dispose();
+
+		ground = world.createBody(bodyDef);
+		ground.createFixture(fixtureDef);
+		ground.setUserData(polygon_sprite);
+
+		polygon_shape.dispose();
 	}
 
 	@Override
@@ -138,33 +173,25 @@ public class Splash implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		world.getBodies(bodies);
-		for (Body body : bodies)
-			if (body.getUserData() instanceof Sprite) {
-				Sprite sprite = (Sprite) body.getUserData();
-				sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2);
-				sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
-				sprite.draw(batch);
+		for (Body body : bodies) {
+			if (body.getUserData() instanceof PolygonSprite) {
+				PolygonSprite polygon_sprite = (PolygonSprite) body.getUserData();
+				polygon_sprite.setPosition(
+						body.getPosition().x - polygon_sprite.getWidth() / 15, 
+						body.getPosition().y - polygon_sprite.getHeight() / 15);
+				polygon_sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+				polygon_sprite.draw(batch);
 			}
+		}
 		batch.end();
 		batch.setProjectionMatrix(hud.getCamera().combined);
 		hud.act(delta);
 		hud.draw();
-
-		// Debug sprite lines
-		//		debugRenderer.render(world, camera.combined);
-
-		// FPS
-		// System.out.println(Gdx.graphics.getFramesPerSecond());
-
-		// PC / Andriod controls
-		//		Gdx.input.setCatchBackKey(true);
-		//		if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-		//		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		camera.viewportWidth = width / 15f; // 10 pc 15 andriod
+		camera.viewportWidth = width / 15f;
 		camera.viewportHeight = height / 15f;
 		hud.getViewport().update(width, height);
 	}
