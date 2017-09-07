@@ -1,5 +1,5 @@
 # goo
-liquid goo simulation libgdx - download and run the [jar](https://github.com/rks1337/goo/blob/master/goo%20v1.0.jar) or download for [andriod]()
+liquid goo simulation libgdx - download and run the [jar](https://github.com/rks1337/goo/blob/master/goo%20v1.0.jar) or download for [andriod](https://play.google.com/store/apps/details?id=com.goo)
 
 ![Alt text](https://github.com/rks1337/goo/blob/master/old%20versions/goo_screen_4.png "ლ(◕ω◕ლ)")
 
