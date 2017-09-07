@@ -1,5 +1,5 @@
 # goo
-liquid goo simulation libgdx
+liquid goo simulation libgdx - download and run the jar: https://github.com/rks1337/goo/blob/master/goo.jar
 
 ![Alt text](https://github.com/rks1337/goo/blob/master/old%20versions/goo_screen_4.png "ლ(◕ω◕ლ)")
 
