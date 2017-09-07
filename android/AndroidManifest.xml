@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.exp"
-    android:versionCode="7777"
-    android:versionName="7777.0" >
+    package="com.goo"
+    android:versionCode="77"
+    android:versionName="77.0" >
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="25" />
 
